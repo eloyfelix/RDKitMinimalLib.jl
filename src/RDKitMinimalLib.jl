@@ -1,7 +1,7 @@
 module RDKitMinimalLib
 
 using RDKit_jll
-      JSON
+using JSON
 
 export get_inchi_for_molblock,
        get_inchikey_for_inchi,
