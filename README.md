@@ -2,10 +2,11 @@
 
 See https://github.com/rdkit/rdkit/tree/master/Code/MinimalLib
 
-## to install:
+## to install (requires Julia ≥ 1.6):
 
 ```julia
-(@v1.6) pkg> add https://github.com/eloyfelix/RDKitMinimalLib.jl
+julia> import Pkg
+julia> Pkg.add(url="https://github.com/eloyfelix/RDKitMinimalLib.jl")
 ```
 
 ## example:
