@@ -1,6 +1,6 @@
 # RDKitMinimalLib wrapper for the Julia programming language
 
-See https://github.com/rdkit/rdkit/tree/master/Code/MinimalLib
+This is very experimental and it can break (and will probably do). This package contains Julia librdkitcffi wrappers using ccall.
 
 ## to install (requires Julia ≥ 1.6):
 
