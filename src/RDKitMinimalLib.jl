@@ -3,7 +3,8 @@ module RDKitMinimalLib
 using RDKit_jll
 using JSON
 
-export get_mol,
+export # io
+       get_mol,
        get_qmol,
        get_smiles,
        get_smarts,
@@ -14,13 +15,14 @@ export get_mol,
        get_inchi,
        get_inchi_for_molblock,
        get_inchikey_for_inchi,
+       # drawing
        get_svg,
-       # descriptors
+       # calculators
        get_morgan_fp,
        get_rdkit_fp,
        get_pattern_fp,
        get_descriptors,
-       # standardise
+       # standardization
        cleanup,
        normalize,
        canonical_tautomer,
@@ -28,11 +30,12 @@ export get_mol,
        reionize,
        neutralize,
        fragment_parent,
-       # transforms
+       # coordinates
        prefer_coordgen,
        set_2d_coords,
        set_2d_coords_aligned,
        set_3d_coords,
+       # modification
        add_hs,
        remove_all_hs,
        # substruct
@@ -43,13 +46,13 @@ export get_mol,
        disable_logging,
        version
 
-
-
 include("utils.jl")
 include("io.jl")
-include("transforms.jl")
-include("standardise.jl")
-include("substruct.jl")
-include("descriptors.jl")
+include("drawing.jl")
+include("calculators.jl")
+include("standardization.jl")
+include("coordinates.jl")
+include("modification.jl")
+include("substructure.jl")
 
 end # module
