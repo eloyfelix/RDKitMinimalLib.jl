@@ -1,5 +1,6 @@
 name: CI
 on:
+  workflow_dispatch:
   pull_request:
     branches:
       - master
@@ -61,8 +62,8 @@ jobs:
   #     - run: |
   #         julia --project=docs -e '
   #           using Documenter: doctest
-  #           using MYPACKAGE
-  #           doctest(MYPACKAGE)' # change MYPACKAGE to the name of your package
+  #           using RDKitMinimalLib
+  #           doctest(RDKitMinimalLib)'
   #     - run: julia --project=docs docs/make.jl
   #       env:
   #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
