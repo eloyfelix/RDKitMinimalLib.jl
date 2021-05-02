@@ -72,4 +72,11 @@ svg = get_svg(mol, smatch)
 open("mol.svg", "w") do file
     write(file, svg)
 end
+
+add_hs(mol)
+set_3d_coords(mol)
+open("3d_coords.mol", "w") do file
+    write(file, get_molblock(mol))
+end
+
 ```
