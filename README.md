@@ -49,6 +49,8 @@ M  END
 """
 
 mol = get_mol(molblock)
+qmol = get_qmol("c1ccccc1")
+
 smiles = get_smiles(mol)
 descriptors = get_descriptors(mol)
 
@@ -57,13 +59,15 @@ morgan_fp = get_morgan_fp(mol, fp_details)
 
 inchi = get_inchi_for_molblock(molblock)
 inchi_key = get_inchikey_for_inchi(inchi)
-svg = get_svg(mol)
 
 println(smiles)
 println(descriptors)
 println(morgan_fp)
 println(inchi)
 println(inchi_key)
+
+match = get_substruct_match(mol, qmol)
+svg = get_svg(mol, match)
 
 open("mol.svg", "w") do file
     write(file, svg)
