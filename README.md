@@ -11,4 +11,4 @@ julia> Pkg.add(url="https://github.com/eloyfelix/RDKitMinimalLib.jl")
 
 ## Documentation:
 
-Documentation is available at https://eloyfelix.github.io/RDKitMinimalLib.jl/
+Documentation is available at https://eloyfelix.github.io/RDKitMinimalLib.jl/dev/
