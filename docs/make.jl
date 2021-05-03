@@ -21,7 +21,8 @@ makedocs(
     )
 )
 
-# deploydocs(
-#     repo="github.com/eloyfelix/RDKitMinimalLib.jl.git",
-#     push_preview=true
-# )
+deploydocs(
+    #options
+    repo="github.com/eloyfelix/RDKitMinimalLib.jl.git",
+    devbranch = "main"
+)
