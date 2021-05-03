@@ -20,11 +20,20 @@ function get_morgan_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothin
     return unsafe_string(val)
 end
 
+"""
+    get_morgan_fp_as_bytes(mol::Mol)
+
+Get Morgan (ECFP like) fingerprints as bytes.
+
+```julia
+morgan_fp_bytes = get_morgan_fp_as_bytes(mol)
+```
+"""
 function get_morgan_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val = ccall((:get_morgan_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
-    return unsafe_string(val)
+    return unsafe_string(pointer(val), n_bytes[])
 end
 
 """
@@ -42,11 +51,20 @@ function get_rdkit_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing
     return unsafe_string(val)
 end
 
+"""
+    get_rdkit_fp_as_bytes(mol::Mol)
+
+Get RDKit fingerprints as bytes.
+
+```julia
+rfp_bytes = get_rdkit_fp_as_bytes(mol)
+```
+"""
 function get_rdkit_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val = ccall((:get_rdkit_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
-    return unsafe_string(val)
+    return unsafe_string(pointer(val), n_bytes[])
 end
 
 """
@@ -64,11 +82,20 @@ function get_pattern_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothi
     return unsafe_string(val)
 end
 
+"""
+    get_pattern_fp_as_bytes(mol::Mol)
+
+Get RDKit Pattern fingerprints as bytes.
+
+```julia
+pfp_bytes = get_pattern_fp_as_bytes(mol)
+```
+"""
 function get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val = ccall((:get_pattern_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
-    return unsafe_string(val)
+    return unsafe_string(pointer(val), n_bytes[])
 end
 
 """
