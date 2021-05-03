@@ -63,6 +63,7 @@ function get_smiles(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing):
     val = ccall((:get_smiles, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
     smiles = unsafe_string(val)
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return smiles
 end
 
