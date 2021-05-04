@@ -18,7 +18,9 @@ version = version()
 """
 function version()::String
     val = ccall((:version, librdkitcffi), Cstring, ())
-    return unsafe_string(val)
+    version = unsafe_string(val)
+    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    return version
 end
 
 """
