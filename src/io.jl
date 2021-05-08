@@ -78,8 +78,7 @@ smarts = get_smarts(mol)
 function get_smarts(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_smarts, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    smarts = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    smarts = unsafe_string_and_free(val)
     return smarts
 end
 
@@ -95,8 +94,7 @@ cxsmiles = get_cxsmiles(mol)
 function get_cxsmiles(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_cxsmiles, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    cxsmiles = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    cxsmiles = unsafe_string_and_free(val)
     return cxsmiles
 end
 
@@ -112,8 +110,7 @@ molblock = get_molblock(mol)
 function get_molblock(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_molblock, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    molblock = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    molblock = unsafe_string_and_free(val)
     return molblock
 end
 
@@ -129,8 +126,7 @@ v3kmolblock = get_v3kmolblock(mol)
 function get_v3kmolblock(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_v3kmolblock, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    v3dmolblock = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    v3dmolblock = unsafe_string_and_free(val)
     return v3dmolblock
 end
 
@@ -146,8 +142,7 @@ json = get_json(mol)
 function get_json(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_json, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    json = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    json = unsafe_string_and_free(val)
     return json
 end
 
@@ -163,8 +158,7 @@ inchi = get_inchi(mol)
 function get_inchi(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_inchi, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    inchi = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    inchi = unsafe_string_and_free(val)
     return inchi
 end
 
@@ -180,8 +174,7 @@ inchi = get_inchi_for_molblock(molblock)
 function get_inchi_for_molblock(molblock::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_inchi_for_molblock, librdkitcffi), Cstring, (Cstring, Cstring), molblock, details_json)
-    inchi = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    inchi = unsafe_string_and_free(val)
     return inchi
 end
 
@@ -196,7 +189,6 @@ inchikey = get_inchikey_for_inchi(inchi)
 """
 function get_inchikey_for_inchi(inchi::AbstractString)
     val::Cstring = ccall((:get_inchikey_for_inchi, librdkitcffi), Cstring, (Cstring,), inchi)
-    inchikey = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    inchikey = unsafe_string_and_free(val)
     return inchikey
 end
