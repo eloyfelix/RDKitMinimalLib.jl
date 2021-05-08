@@ -36,7 +36,7 @@ set_2d_coords_aligned(mol, template_mol)
 """
 function set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
     details_json::String = jsonify_details(details)
-    ccall((:set_2d_coords_aligned, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Ref{Cstring}, Csize_t, Cstring), mol.mol, mol.mol_size, template_mol.mol, template_mol.mol_size, details_json)
+    ccall((:set_2d_coords_aligned, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring, Csize_t, Cstring), mol.mol, mol.mol_size, template_mol.mol[], template_mol.mol_size[], details_json)
 end
 
 """
