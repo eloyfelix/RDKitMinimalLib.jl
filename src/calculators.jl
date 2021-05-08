@@ -16,7 +16,7 @@ morgan_fp = get_morgan_fp(mol, fp_details)
 """
 function get_morgan_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
-    val = ccall((:get_morgan_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
+    val::Cstring = ccall((:get_morgan_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
     mfp = unsafe_string(val)
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return mfp
@@ -34,7 +34,7 @@ morgan_fp_bytes = get_morgan_fp_as_bytes(mol)
 function get_morgan_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
-    val = ccall((:get_morgan_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
+    val::Cstring = ccall((:get_morgan_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     mfp = unsafe_string(pointer(val), n_bytes[])
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return mfp
@@ -51,7 +51,7 @@ rfp = get_rdkit_fp(mol)
 """
 function get_rdkit_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
-    val = ccall((:get_rdkit_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
+    val::Cstring = ccall((:get_rdkit_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
     rfp = unsafe_string(val)
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return rfp
@@ -69,7 +69,7 @@ rfp_bytes = get_rdkit_fp_as_bytes(mol)
 function get_rdkit_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
-    val = ccall((:get_rdkit_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
+    val::Cstring = ccall((:get_rdkit_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     rfp = unsafe_string(pointer(val), n_bytes[])
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return rfp
@@ -86,7 +86,7 @@ pfp = get_pattern_fp(mol)
 """
 function get_pattern_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
-    val = ccall((:get_pattern_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
+    val::Cstring = ccall((:get_pattern_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
     pfp = unsafe_string(val)
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return pfp
@@ -104,7 +104,7 @@ pfp_bytes = get_pattern_fp_as_bytes(mol)
 function get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
-    val = ccall((:get_pattern_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
+    val::Cstring = ccall((:get_pattern_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     pfp = unsafe_string(pointer(val), n_bytes[])
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return pfp
@@ -120,7 +120,7 @@ descs = get_descriptors(mol)
 ```
 """
 function get_descriptors(mol::Mol)
-    val = ccall((:get_descriptors, librdkitcffi), Cstring, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
+    val::Cstring = ccall((:get_descriptors, librdkitcffi), Cstring, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
     json = JSON.parse(unsafe_string(val))
     ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
     return json

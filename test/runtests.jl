@@ -106,15 +106,21 @@ end
 
     @test get_morgan_fp(mol, fp_details) == "1110010110110100110000110000000001001001000000010010000101001100"
     @test count(i->(i=='1'), get_morgan_fp(mol)) == 24
-    @test length(get_morgan_fp_as_bytes(mol)) == 256
+    tb = get_morgan_fp_as_bytes(mol)
+    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 24
+
 
     @test get_rdkit_fp(mol, fp_details) == "1111111111111111111111111111111111111111111111111111111111111111"
     @test count(i->(i=='1'), get_rdkit_fp(mol)) == 354
-    @test length(get_rdkit_fp_as_bytes(mol)) == 256
+    tb = get_rdkit_fp_as_bytes(mol)
+    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 354
+
 
     @test get_pattern_fp(mol, fp_details) == "1111111111111101111111111111111011011111111111111111111111111111"
     @test count(i->(i=='1'), get_pattern_fp(mol)) == 173
-    @test length(get_pattern_fp_as_bytes(mol)) == 256
+    tb = get_pattern_fp_as_bytes(mol)
+    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 173
+
 
     @test get_descriptors(mol) == Dict{String, Any}("lipinskiHBA" => 4.0, "lipinskiHBD" => 1.0, "NumAromaticRings" => 1.0, "NumRings" => 1.0, "NumAromaticHeterocycles" => 0.0, "CrippenMR" => 44.7103, "labuteASA" => 74.75705, "NumHeterocycles" => 0.0, "chi0v" => 6.98135, "tpsa" => 63.6, "kappa1" => 9.2496, "chi3n" => 1.37115, "NumHeteroatoms" => 4.0, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "NumHBD" => 1.0, "kappa2" => 3.70925, "kappa3" => 2.29741, "NumSpiroAtoms" => 0.0, "Phi" => 2.63916, "chi1n" => 3.61745, "chi2n" => 1.37115, "NumHBA" => 3.0, "FractionCSP3" => 0.11111, "chi4n" => 0.88717, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "exactmw" => 180.04225, "amw" => 180.15899, "NumSaturatedRings" => 0.0, "NumAliphaticHeterocycles" => 0.0, "hallKierAlpha" => -1.83999, "NumAtomStereoCenters" => 0.0, "CrippenClogP" => 1.31009, "chi4v" => 0.88717, "NumAliphaticRings" => 0.0, "NumRotatableBonds" => 2.0, "chi2v" => 1.37115, "NumAmideBonds" => 0.0, "NumSaturatedHeterocycles" => 0.0, "chi3v" => 1.37115)
 end
