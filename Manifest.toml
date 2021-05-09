@@ -96,9 +96,9 @@ uuid = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 
 [[Preferences]]
 deps = ["TOML"]
-git-tree-sha1 = "ea79e4c9077208cd3bc5d29631a26bc0cff78902"
+git-tree-sha1 = "00cfd92944ca9c760982747e9a1d0d5d86ab1e5a"
 uuid = "21216c6a-2e73-6563-6e65-726566657250"
-version = "1.2.1"
+version = "1.2.2"
 
 [[Printf]]
 deps = ["Unicode"]
@@ -106,9 +106,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[RDKit_jll]]
 deps = ["Artifacts", "FreeType2_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll", "boost_jll"]
-git-tree-sha1 = "d3f5c96c7f9abc7b57a30e407240e5784d8211ca"
+git-tree-sha1 = "7164e3b36b7a1f48f6db5200063e79c114e26bba"
 uuid = "03d1d220-30e6-562a-9e1a-3062d7b56d75"
-version = "2021.9.1-pre+0"
+version = "2021.9.1-pre+1"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
@@ -134,10 +134,6 @@ uuid = "fa267f1f-6049-4f14-aa54-33bafae1ed76"
 [[Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-
-[[Test]]
-deps = ["InteractiveUtils", "Logging", "Random", "Serialization"]
-uuid = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [[UUIDs]]
 deps = ["Random", "SHA"]
