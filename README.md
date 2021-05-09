@@ -1,4 +1,5 @@
 [![CI Testing](https://github.com/JuliaData/DataFrames.jl/workflows/CI/badge.svg)](https://github.com/eloyfelix/RDKitMinimalLib.jl/actions?query=workflow%3ACI+branch%3Amain)
+[![codecov.io](http://codecov.io/github/eloyfelix/RDKitMinimalLib.jl/coverage.svg?branch=main)](http://codecov.io/github/eloyfelix/RDKitMinimalLib.jl?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/eloyfelix/RDKitMinimalLib.jl/main?filepath=notebooks/demo.ipynb)
 
