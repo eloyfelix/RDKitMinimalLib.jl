@@ -10,7 +10,7 @@ mutable struct Mol
 end
 
 """
-    get_mol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Mol
+    get_mol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Mol,Nothing}
 
 Get a mol from a molblock (v2000, v3000), SMILES or SMARTS.
 
@@ -18,19 +18,20 @@ Get a mol from a molblock (v2000, v3000), SMILES or SMARTS.
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 ```
 """
-function get_mol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Mol
+function get_mol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Mol,Nothing}
     details_json::String = jsonify_details(details)
     mol_size = Ref{Csize_t}(0)
     val = ccall((:get_mol, librdkitcffi), Cstring, (Cstring, Ref{Csize_t}, Cstring), mol_string, mol_size, details_json)
     if val == C_NULL
-        error("error parsing the molecule, use enable_logging() to get more info")
+        mol = nothing
+    else
+        mol = Mol(val, mol_size)
     end
-    mol = Mol(val, mol_size)
     return mol
 end
 
 """
-    get_qmol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Mol
+    get_qmol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Mol,Nothing}
 
 Get a query mol (for substructure search) for a molblock (v2000, v3000), SMILES or SMARTS.
 
@@ -38,14 +39,15 @@ Get a query mol (for substructure search) for a molblock (v2000, v3000), SMILES 
 mol = get_qmol("c1ccccc1")
 ```
 """
-function get_qmol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Mol
+function get_qmol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Mol,Nothing}
     details_json::String = jsonify_details(details)
     mol_size = Ref{Csize_t}(0)
     val::Cstring = ccall((:get_qmol, librdkitcffi), Cstring, (Cstring, Ref{Csize_t}, Cstring), mol_string, mol_size, details_json)
     if val == C_NULL
-        error("error parsing the molecule, use enable_logging() to get more info")
+        mol = nothing
+    else
+        mol = Mol(val, mol_size)
     end
-    mol = Mol(val, mol_size)
     return mol
 end
 
