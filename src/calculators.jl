@@ -30,12 +30,12 @@ Get Morgan (ECFP like) fingerprints as bytes.
 morgan_fp_bytes = get_morgan_fp_as_bytes(mol)
 ```
 """
-function get_morgan_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+function get_morgan_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val::Cstring = ccall((:get_morgan_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     mfp = unsafe_string_and_free(val, n_bytes)
-    return mfp
+    return Vector{UInt8}(mfp)
 end
 
 """
@@ -63,12 +63,12 @@ Get RDKit fingerprints as bytes.
 rfp_bytes = get_rdkit_fp_as_bytes(mol)
 ```
 """
-function get_rdkit_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+function get_rdkit_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val::Cstring = ccall((:get_rdkit_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     rfp = unsafe_string_and_free(val, n_bytes)
-    return rfp
+    return Vector{UInt8}(rfp)
 end
 
 """
@@ -96,12 +96,12 @@ Get RDKit Pattern fingerprints as bytes.
 pfp_bytes = get_pattern_fp_as_bytes(mol)
 ```
 """
-function get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+function get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
     details_json::String = jsonify_details(details)
     n_bytes = Ref{Csize_t}(0)
     val::Cstring = ccall((:get_pattern_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
     pfp = unsafe_string_and_free(val, n_bytes)
-    return pfp
+    return Vector{UInt8}(pfp)
 end
 
 """

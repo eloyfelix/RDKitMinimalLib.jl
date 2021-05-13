@@ -63,8 +63,7 @@ smiles = get_smiles(mol)
 function get_smiles(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
     val::Cstring = ccall((:get_smiles, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
-    smiles = unsafe_string(val)
-    ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), val)
+    smiles = unsafe_string_and_free(val)
     return smiles
 end
 
