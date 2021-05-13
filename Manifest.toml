@@ -106,9 +106,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[RDKit_jll]]
 deps = ["Artifacts", "FreeType2_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll", "boost_jll"]
-git-tree-sha1 = "7164e3b36b7a1f48f6db5200063e79c114e26bba"
+git-tree-sha1 = "a486a58ede42373d49870a33c52f2ccf64aa6aa8"
 uuid = "03d1d220-30e6-562a-9e1a-3062d7b56d75"
-version = "2021.9.1-pre+1"
+version = "2021.9.1-pre+2"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
