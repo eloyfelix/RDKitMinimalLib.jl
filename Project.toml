@@ -1,7 +1,7 @@
 name = "RDKitMinimalLib"
 uuid = "44044271-7623-48dc-8250-42433c44e4b7"
-authors = ["Eloy Félix <efelix@ebi.ac.uk>"]
-version = "0.2.0"
+authors = ["Eloy Félix <eloyfelix@gmail.com>"]
+version = "0.2.1"
 
 [deps]
 JSON = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
