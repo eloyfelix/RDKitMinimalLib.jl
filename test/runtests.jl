@@ -82,6 +82,12 @@ end
 end
 
 @testset "standardization" begin
+    # normalize (sulfoxide)
+    mol = get_mol("CS(C)=O")
+    normalize(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "C[S+](C)[O-]"
+
     # cleanup
     mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
     smiles = get_smiles(mol)
@@ -134,6 +140,13 @@ end
     set_3d_coords(mol)
     @test occursin("RDKit          3D", get_molblock(mol))
     set_2d_coords(mol)
+    @test occursin("RDKit          2D", get_molblock(mol))
+
+    mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+    set_3d_coords(mol)
+    template = get_mol("CC(=O)Nc1ccc(O)cc1")
+    set_2d_coords(template)
+    set_2d_coords_aligned(mol, template)
     @test occursin("RDKit          2D", get_molblock(mol))
 end
 
