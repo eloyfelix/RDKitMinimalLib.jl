@@ -34,46 +34,6 @@ molblockv2000 = """
 M  END
 """
 
-molblockv3000 = """
-
-     RDKit          2D
-
-  0  0  0  0  0  0  0  0  0  0999 V3000
-M  V30 BEGIN CTAB
-M  V30 COUNTS 13 13 0 0 0
-M  V30 BEGIN ATOM
-M  V30 1 C 8.881000 -2.120600 0.000000 0
-M  V30 2 C 8.879800 -2.947900 0.000000 0
-M  V30 3 C 9.594600 -3.360700 0.000000 0
-M  V30 4 C 10.311000 -2.947400 0.000000 0
-M  V30 5 C 10.308100 -2.117000 0.000000 0
-M  V30 6 C 9.592800 -1.707800 0.000000 0
-M  V30 7 C 11.021000 -1.701800 0.000000 0
-M  V30 8 O 11.736900 -2.111600 0.000000 0
-M  V30 9 O 11.026000 -3.358800 0.000000 0
-M  V30 10 C 11.027300 -4.183700 0.000000 0
-M  V30 11 C 11.742300 -4.594900 0.000000 0
-M  V30 12 O 10.313600 -4.597200 0.000000 0
-M  V30 13 O 11.017800 -0.876900 0.000000 0
-M  V30 END ATOM
-M  V30 BEGIN BOND
-M  V30 1 2 1 2
-M  V30 2 1 5 7
-M  V30 3 2 3 4
-M  V30 4 2 7 8
-M  V30 5 1 4 9
-M  V30 6 1 4 5
-M  V30 7 1 9 10
-M  V30 8 1 2 3
-M  V30 9 1 10 11
-M  V30 10 2 5 6
-M  V30 11 2 10 12
-M  V30 12 1 6 1
-M  V30 13 1 7 13
-M  V30 END BOND
-M  V30 END CTAB
-M  END
-"""
 
 @testset "io" begin
     mol = get_mol(molblockv2000)
@@ -107,22 +67,67 @@ end
     @test get_morgan_fp(mol, fp_details) == "1110010110110100110000110000000001001001000000010010000101001100"
     @test count(i->(i=='1'), get_morgan_fp(mol)) == 24
     tb = get_morgan_fp_as_bytes(mol)
-    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 24
-
+    @test sum([count_ones(b) for b in tb]) == 24
 
     @test get_rdkit_fp(mol, fp_details) == "1111111111111111111111111111111111111111111111111111111111111111"
     @test count(i->(i=='1'), get_rdkit_fp(mol)) == 354
     tb = get_rdkit_fp_as_bytes(mol)
-    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 354
-
+    @test sum([count_ones(b) for b in tb]) == 354
 
     @test get_pattern_fp(mol, fp_details) == "1111111111111101111111111111111011011111111111111111111111111111"
     @test count(i->(i=='1'), get_pattern_fp(mol)) == 173
     tb = get_pattern_fp_as_bytes(mol)
-    @test sum([count_ones(b) for b in Vector{UInt8}(tb)]) == 173
-
+    @test sum([count_ones(b) for b in tb]) == 173
 
     @test get_descriptors(mol) == Dict{String, Any}("lipinskiHBA" => 4.0, "lipinskiHBD" => 1.0, "NumAromaticRings" => 1.0, "NumRings" => 1.0, "NumAromaticHeterocycles" => 0.0, "CrippenMR" => 44.7103, "labuteASA" => 74.75705, "NumHeterocycles" => 0.0, "chi0v" => 6.98135, "tpsa" => 63.6, "kappa1" => 9.2496, "chi3n" => 1.37115, "NumHeteroatoms" => 4.0, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "NumHBD" => 1.0, "kappa2" => 3.70925, "kappa3" => 2.29741, "NumSpiroAtoms" => 0.0, "Phi" => 2.63916, "chi1n" => 3.61745, "chi2n" => 1.37115, "NumHBA" => 3.0, "FractionCSP3" => 0.11111, "chi4n" => 0.88717, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "exactmw" => 180.04225, "amw" => 180.15899, "NumSaturatedRings" => 0.0, "NumAliphaticHeterocycles" => 0.0, "hallKierAlpha" => -1.83999, "NumAtomStereoCenters" => 0.0, "CrippenClogP" => 1.31009, "chi4v" => 0.88717, "NumAliphaticRings" => 0.0, "NumRotatableBonds" => 2.0, "chi2v" => 1.37115, "NumAmideBonds" => 0.0, "NumSaturatedHeterocycles" => 0.0, "chi3v" => 1.37115)
+end
+
+@testset "standardization" begin
+    # cleanup
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
+    smiles = get_smiles(mol)
+    @test smiles == "O=N(=O)CC[Pt]"
+    cleanup(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "[CH2-]C[N+](=O)[O-].[Pt+]"
+
+    # fragment_parent
+    fragment_parent(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "[CH2-]C[N+](=O)[O-]"
+
+    # charge_parent
+    charge_parent(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "CC[N+](=O)[O-]"
+
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
+    charge_parent(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "CC[N+](=O)[O-]"
+
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
+    charge_parent(mol, Dict{String, Any}("skipStandardize" => true))
+    smiles = get_smiles(mol)
+    @test smiles == "[CH2-]C[N+](=O)[O-].[Pt+]"
+
+    # neutralize
+    mol = get_mol("[CH2-]CN(=O)=O", Dict{String, Any}("sanitize" => false))
+    neutralize(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "CCN(=O)=O"
+
+    # reionize
+    mol = get_mol("[O-]c1cc(C(=O)O)ccc1")
+    reionize(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "O=C([O-])c1cccc(O)c1"
+
+    # canonical_tautomer
+    mol = get_mol("OC(O)C(=N)CO")
+    canonical_tautomer(mol)
+    smiles = get_smiles(mol)
+    @test smiles == "NC(CO)C(=O)O"
 end
 
 @testset "coordinates" begin

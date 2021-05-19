@@ -9,6 +9,7 @@ makedocs(
         "RDKitMinimalLib" => [
             "I/O" => "io.md",
             "Calculators" => "calculators.md",
+            "Standardization" => "standardization.md",
             "Coordinates" => "coordinates.md",
             "Drawing" => "drawing.md",
             "Modification" => "modification.md",
