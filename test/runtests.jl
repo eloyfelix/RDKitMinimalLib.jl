@@ -34,7 +34,6 @@ molblockv2000 = """
 M  END
 """
 
-
 @testset "io" begin
     mol = get_mol(molblockv2000)
     @test mol.mol_size[] == 0x000000000000042a
@@ -53,7 +52,7 @@ end
 
 @testset "drawing" begin
     mol = get_mol(molblockv2000)
-    @test occursin("width='350px'", get_svg(mol, Dict{String, Any}("height" => 300, "width" => 350)))
+    @test occursin("width='350px'", get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
 
     qmol = get_qmol("c1ccccc1")
     smatch = get_substruct_match(mol, qmol)
@@ -62,29 +61,29 @@ end
 
 @testset "calculators" begin
     mol = get_mol(molblockv2000)
-    fp_details = Dict{String, Any}("nBits" => 64, "radius" => 2)
+    fp_details = Dict{String,Any}("nBits" => 64, "radius" => 2)
 
     @test get_morgan_fp(mol, fp_details) == "1110010110110100110000110000000001001001000000010010000101001100"
-    @test count(i->(i=='1'), get_morgan_fp(mol)) == 24
+    @test count(i -> (i == '1'), get_morgan_fp(mol)) == 24
     tb = get_morgan_fp_as_bytes(mol)
     @test sum([count_ones(b) for b in tb]) == 24
 
     @test get_rdkit_fp(mol, fp_details) == "1111111111111111111111111111111111111111111111111111111111111111"
-    @test count(i->(i=='1'), get_rdkit_fp(mol)) == 354
+    @test count(i -> (i == '1'), get_rdkit_fp(mol)) == 354
     tb = get_rdkit_fp_as_bytes(mol)
     @test sum([count_ones(b) for b in tb]) == 354
 
     @test get_pattern_fp(mol, fp_details) == "1111111111111101111111111111111011011111111111111111111111111111"
-    @test count(i->(i=='1'), get_pattern_fp(mol)) == 173
+    @test count(i -> (i == '1'), get_pattern_fp(mol)) == 173
     tb = get_pattern_fp_as_bytes(mol)
     @test sum([count_ones(b) for b in tb]) == 173
 
-    @test get_descriptors(mol) == Dict{String, Any}("lipinskiHBA" => 4.0, "lipinskiHBD" => 1.0, "NumAromaticRings" => 1.0, "NumRings" => 1.0, "NumAromaticHeterocycles" => 0.0, "CrippenMR" => 44.7103, "labuteASA" => 74.75705, "NumHeterocycles" => 0.0, "chi0v" => 6.98135, "tpsa" => 63.6, "kappa1" => 9.2496, "chi3n" => 1.37115, "NumHeteroatoms" => 4.0, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "NumHBD" => 1.0, "kappa2" => 3.70925, "kappa3" => 2.29741, "NumSpiroAtoms" => 0.0, "Phi" => 2.63916, "chi1n" => 3.61745, "chi2n" => 1.37115, "NumHBA" => 3.0, "FractionCSP3" => 0.11111, "chi4n" => 0.88717, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "exactmw" => 180.04225, "amw" => 180.15899, "NumSaturatedRings" => 0.0, "NumAliphaticHeterocycles" => 0.0, "hallKierAlpha" => -1.83999, "NumAtomStereoCenters" => 0.0, "CrippenClogP" => 1.31009, "chi4v" => 0.88717, "NumAliphaticRings" => 0.0, "NumRotatableBonds" => 2.0, "chi2v" => 1.37115, "NumAmideBonds" => 0.0, "NumSaturatedHeterocycles" => 0.0, "chi3v" => 1.37115)
+    @test get_descriptors(mol) == Dict{String,Any}("lipinskiHBA" => 4.0, "lipinskiHBD" => 1.0, "NumAromaticRings" => 1.0, "NumRings" => 1.0, "NumAromaticHeterocycles" => 0.0, "CrippenMR" => 44.7103, "labuteASA" => 74.75705, "NumHeterocycles" => 0.0, "chi0v" => 6.98135, "tpsa" => 63.6, "kappa1" => 9.2496, "chi3n" => 1.37115, "NumHeteroatoms" => 4.0, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "NumHBD" => 1.0, "kappa2" => 3.70925, "kappa3" => 2.29741, "NumSpiroAtoms" => 0.0, "Phi" => 2.63916, "chi1n" => 3.61745, "chi2n" => 1.37115, "NumHBA" => 3.0, "FractionCSP3" => 0.11111, "chi4n" => 0.88717, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "exactmw" => 180.04225, "amw" => 180.15899, "NumSaturatedRings" => 0.0, "NumAliphaticHeterocycles" => 0.0, "hallKierAlpha" => -1.83999, "NumAtomStereoCenters" => 0.0, "CrippenClogP" => 1.31009, "chi4v" => 0.88717, "NumAliphaticRings" => 0.0, "NumRotatableBonds" => 2.0, "chi2v" => 1.37115, "NumAmideBonds" => 0.0, "NumSaturatedHeterocycles" => 0.0, "chi3v" => 1.37115)
 end
 
 @testset "standardization" begin
     # cleanup
-    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
     smiles = get_smiles(mol)
     @test smiles == "O=N(=O)CC[Pt]"
     cleanup(mol)
@@ -101,18 +100,18 @@ end
     smiles = get_smiles(mol)
     @test smiles == "CC[N+](=O)[O-]"
 
-    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
     charge_parent(mol)
     smiles = get_smiles(mol)
     @test smiles == "CC[N+](=O)[O-]"
 
-    mol = get_mol("[Pt]CCN(=O)=O", Dict{String, Any}("sanitize" => false))
-    charge_parent(mol, Dict{String, Any}("skipStandardize" => true))
+    mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
+    charge_parent(mol, Dict{String,Any}("skipStandardize" => true))
     smiles = get_smiles(mol)
     @test smiles == "[CH2-]C[N+](=O)[O-].[Pt+]"
 
     # neutralize
-    mol = get_mol("[CH2-]CN(=O)=O", Dict{String, Any}("sanitize" => false))
+    mol = get_mol("[CH2-]CN(=O)=O", Dict{String,Any}("sanitize" => false))
     neutralize(mol)
     smiles = get_smiles(mol)
     @test smiles == "CCN(=O)=O"
@@ -151,6 +150,6 @@ end
 @testset "substructure" begin
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     qmol = get_qmol("c1ccccc1")
-    @test get_substruct_match(mol, qmol) == Dict{String, Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])
-    @test get_substruct_matches(mol, qmol) == Any[Dict{String, Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])]
+    @test get_substruct_match(mol, qmol) == Dict{String,Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])
+    @test get_substruct_matches(mol, qmol) == Any[Dict{String,Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])]
 end
