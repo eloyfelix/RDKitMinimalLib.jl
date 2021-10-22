@@ -106,9 +106,9 @@ uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
 [[RDKit_jll]]
 deps = ["Artifacts", "FreeType2_jll", "JLLWrappers", "Libdl", "Pkg", "Zlib_jll", "boost_jll"]
-git-tree-sha1 = "4884b561cf398143b051486b7bc4aa8b00279464"
+git-tree-sha1 = "b0be9ffbbbaf265f3cae5eb2c78cc94761df33bf"
 uuid = "03d1d220-30e6-562a-9e1a-3062d7b56d75"
-version = "2021.9.1-pre+3"
+version = "2021.9.2+0"
 
 [[REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
@@ -148,9 +148,9 @@ uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
 
 [[boost_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "95bda308f7f69473c3c98b0cf4cf19e19a88cd49"
+git-tree-sha1 = "ee3aa789316eb452bf6c52ca73b4fbc6806390b3"
 uuid = "28df3c45-c428-5900-9ff8-a3135698ca75"
-version = "1.71.0+3"
+version = "1.76.0+0"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
