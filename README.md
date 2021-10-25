@@ -9,9 +9,9 @@ Julia wraps for librdkitcffi. More information on RDKit MinimalLib in [Greg's bl
 
 ## Installation (requires Julia ≥ 1.6):
 
+at the Julia REPL
 ```julia
-julia> import Pkg
-julia> Pkg.add(url="https://github.com/eloyfelix/RDKitMinimalLib.jl")
+using Pkg; Pkg.add("RDKitMinimalLib")
 ```
 
 ## Documentation:
