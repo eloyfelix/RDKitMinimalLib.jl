@@ -22,7 +22,6 @@ jobs:
         os:
           - ubuntu-latest
           - macOs-latest
-          - windows-latest
         arch:
           - x64
     steps:
