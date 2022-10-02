@@ -28,7 +28,7 @@ mol = get_mol("c1ccccc1O")
 smatches = get_substruct_matches(mol, pattern)
 ```
 """
-function get_substruct_matches(mol::Mol, qmol::Mol, options::Union{Dict{String,Any},Nothing}=nothing)::Vector{Any}
+function get_substruct_matches(mol::Mol, qmol::Mol, options::Union{Dict{String,Any},Nothing}=nothing)::Union{Dict{String, Any}, Vector{Any}}
     options_json::String = jsonify_details(options)
     val::Cstring = ccall((:get_substruct_matches, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], qmol.mol[], qmol.mol_size[], options_json)
     smatches = JSON.parse(unsafe_string_and_free(val))

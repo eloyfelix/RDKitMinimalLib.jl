@@ -165,4 +165,7 @@ end
     qmol = get_qmol("c1ccccc1")
     @test get_substruct_match(mol, qmol) == Dict{String,Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])
     @test get_substruct_matches(mol, qmol) == Any[Dict{String,Any}("bonds" => Any[4, 5, 6, 7, 8, 12], "atoms" => Any[4, 5, 6, 7, 8, 9])]
+    qmol = get_qmol("[CH3]~[CH2]~*")
+    mol = get_mol("COc1cc(C=O)ccc1O")
+    @test get_substruct_matches(mol, qmol) == Dict{String, Any}()
 end
