@@ -1,4 +1,3 @@
-
 """
     get_svg(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
 
@@ -13,4 +12,21 @@ function get_svg(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::St
     val::Cstring = ccall((:get_svg, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
     svg = unsafe_string_and_free(val)
     return svg
+end
+
+"""
+    get_svg(mol::Mol, smatches::Vector, details::Dict=Dict{String,Any}())::String
+
+Get a SVG depiction of the mol with multiple substructre matches.
+
+```julia
+svg = get_svg(mol, get_substruct_matches(mol, query))
+```
+"""
+function get_svg(mol::Mol, smatches::Vector, details::Dict=Dict{String,Any}())::String
+    all_matches = Dict{String,Any}([
+        "bonds" => reduce(vcat, match["bonds"] for match in smatches) 
+        "atoms" => reduce(vcat, match["atoms"] for match in smatches)
+    ])
+    return get_svg(mol, merge(details, all_matches))
 end
