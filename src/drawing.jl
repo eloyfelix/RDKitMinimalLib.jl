@@ -30,3 +30,19 @@ function get_svg(mol::Mol, smatches::Vector, details::Dict=Dict{String,Any}())::
     ])
     return get_svg(mol, merge(details, all_matches))
 end
+
+"""
+    get_rxn_svg(rxn::Reaction, details::Union{Dict{String,Any},Nothing}=nothing)::String
+
+Get a SVG depiction of the reaction.
+
+```julia
+svg = get_rxn_svg(rxn)
+```
+"""
+function get_rxn_svg(rxn::Reaction, details::Union{Dict{String,Any},Nothing}=nothing)::String
+    details_json::String = jsonify_details(details)
+    val::Cstring = ccall((:get_rxn_svg, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), rxn.rxn[], rxn.rxn_size[], details_json)
+    svg = unsafe_string_and_free(val)
+    return svg
+end

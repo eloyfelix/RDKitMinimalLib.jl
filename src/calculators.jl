@@ -105,6 +105,72 @@ function get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothi
 end
 
 """
+    get_atom_pair_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+
+Get atom pair fingerprints.
+
+```julia
+apfp = get_atom_pair_fp(mol)
+```
+"""
+function get_atom_pair_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+    details_json::String = jsonify_details(details)
+    val::Cstring = ccall((:get_atom_pair_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
+    apfp = unsafe_string_and_free(val)
+    return apfp
+end
+
+"""
+    get_atom_pair_fp_as_bytes(mol::Mol)
+
+Get atom pair fingerprints as bytes.
+
+```julia
+apfp_bytes = get_atom_pair_fp_as_bytes(mol)
+```
+"""
+function get_atom_pair_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
+    details_json::String = jsonify_details(details)
+    n_bytes = Ref{Csize_t}(0)
+    val::Cstring = ccall((:get_atom_pair_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
+    apfp = unsafe_string_and_free(val, n_bytes)
+    return Vector{UInt8}(apfp)
+end
+
+"""
+    get_topological_torsion_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+
+Get topological torsion fingerprints.
+
+```julia
+ttfp = get_topological_torsion_fp(mol)
+```
+"""
+function get_topological_torsion_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
+    details_json::String = jsonify_details(details)
+    val::Cstring = ccall((:get_topological_torsion_fp, librdkitcffi), Cstring, (Cstring, Csize_t, Cstring), mol.mol[], mol.mol_size[], details_json)
+    ttfp = unsafe_string_and_free(val)
+    return ttfp
+end
+
+"""
+    get_topological_torsion_fp_as_bytes(mol::Mol)
+
+Get topological torsion fingerprints as bytes.
+
+```julia
+ttfp_bytes = get_topological_torsion_fp_as_bytes(mol)
+```
+"""
+function get_topological_torsion_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
+    details_json::String = jsonify_details(details)
+    n_bytes = Ref{Csize_t}(0)
+    val::Cstring = ccall((:get_topological_torsion_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}, Cstring), mol.mol[], mol.mol_size[], n_bytes, details_json)
+    ttfp = unsafe_string_and_free(val, n_bytes)
+    return Vector{UInt8}(ttfp)
+end
+
+"""
     get_descriptors(mol::Mol)
 
 Get physico-chemical descriptors.

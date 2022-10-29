@@ -6,6 +6,7 @@ using JSON
 export # io
        get_mol,
        get_qmol,
+       get_rxn,
        get_smiles,
        get_smarts,
        get_cxsmiles,
@@ -17,6 +18,7 @@ export # io
        get_inchikey_for_inchi,
        # drawing
        get_svg,
+       get_rxn_svg,
        # calculators
        get_morgan_fp,
        get_rdkit_fp,
@@ -24,6 +26,10 @@ export # io
        get_morgan_fp_as_bytes,
        get_rdkit_fp_as_bytes,
        get_pattern_fp_as_bytes,
+       get_atom_pair_fp,
+       get_atom_pair_fp_as_bytes,
+       get_topological_torsion_fp,
+       get_topological_torsion_fp_as_bytes,
        get_descriptors,
        # standardization
        cleanup,

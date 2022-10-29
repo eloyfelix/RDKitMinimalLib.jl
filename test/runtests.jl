@@ -36,9 +36,11 @@ M  END
 
 @testset "io" begin
     mol = get_mol(molblockv2000)
-    @test mol.mol_size[] == 0x000000000000042a
+    @test mol.mol_size[] == 0x000000000000038e
     qmol = get_qmol("c1ccccc1")
-    @test qmol.mol_size[] == 0x00000000000001eb 
+    @test qmol.mol_size[] == 0x000000000000023f
+    rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
+    @test rxn.rxn_size[] == 0x0000000000000269
     @test get_smiles(mol) == "CC(=O)Oc1ccccc1C(=O)O"
     @test get_smarts(qmol) == "c1ccccc1"
     @test get_cxsmiles(mol) == "CC(=O)Oc1ccccc1C(=O)O |(11.7423,-4.5949,;11.0273,-4.1837,;10.3136,-4.5972,;11.026,-3.3588,;10.311,-2.9474,;9.5946,-3.3607,;8.8798,-2.9479,;8.881,-2.1206,;9.5928,-1.7078,;10.3081,-2.117,;11.021,-1.7018,;11.7369,-2.1116,;11.0178,-0.8769,)|"
@@ -57,6 +59,9 @@ end
     qmol = get_qmol("c1ccccc1")
     smatch = get_substruct_match(mol, qmol)
     @test occursin("fill:#FF7F7F", get_svg(mol, smatch))
+
+    mol = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
+    @test occursin("width='350px'", get_rxn_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
 end
 
 @testset "calculators" begin
@@ -77,6 +82,16 @@ end
     @test count(i -> (i == '1'), get_pattern_fp(mol)) == 173
     tb = get_pattern_fp_as_bytes(mol)
     @test sum([count_ones(b) for b in tb]) == 173
+
+    @test get_atom_pair_fp(mol, fp_details) == "1110111011101100110011001110111111111110110000001000100011111110"
+    @test count(i -> (i == '1'), get_atom_pair_fp(mol)) == 68
+    tb = get_atom_pair_fp_as_bytes(mol)
+    @test sum([count_ones(b) for b in tb]) == 68
+
+    @test get_topological_torsion_fp(mol, fp_details) == "1000000000001100100011001000100000001000000010001110100011100000"
+    @test count(i -> (i == '1'), get_topological_torsion_fp(mol)) == 18
+    tb = get_topological_torsion_fp_as_bytes(mol)
+    @test sum([count_ones(b) for b in tb]) == 18
 
     @test get_descriptors(mol) == Dict{String, Any}("CrippenMR" => 44.7103, "lipinskiHBD" => 1.0, "kappa1" => 9.2496, "kappa3" => 2.29741, "NumHBD" => 1.0, "NumSpiroAtoms" => 0.0, "chi1n" => 3.61745, "FractionCSP3" => 0.11111, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "NumAmideBonds" => 0.0, "NumAromaticHeterocycles" => 0.0, "NumAtoms" => 21.0, "tpsa" => 63.6, "NumHeteroatoms" => 4.0, "Phi" => 2.63916, "exactmw" => 180.04225, "hallKierAlpha" => -1.83999, "CrippenClogP" => 1.31009, "chi3v" => 1.37115, "NumSaturatedHeterocycles" => 0.0, "NumAromaticRings" => 1.0, "labuteASA" => 74.75705, "amw" => 180.15899, "NumAliphaticHeterocycles" => 0.0, "NumAtomStereoCenters" => 0.0, "chi4v" => 0.88717, "NumRotatableBonds" => 2.0, "lipinskiHBA" => 4.0, "NumRings" => 1.0, "chi0v" => 6.98135, "NumHeterocycles" => 0.0, "NumHeavyAtoms" => 13.0, "chi3n" => 1.37115, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "kappa2" => 3.70925, "chi2n" => 1.37115, "NumHBA" => 3.0, "chi4n" => 0.88717, "NumSaturatedRings" => 0.0, "NumAliphaticRings" => 0.0, "chi2v" => 1.37115)
 end
