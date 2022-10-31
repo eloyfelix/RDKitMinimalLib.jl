@@ -21,8 +21,9 @@ Generate 2D coordinates.
 set_2d_coords(mol)
 ```
 """
-function set_2d_coords(mol::Mol)
-    ccall((:set_2d_coords, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}), mol.mol, mol.mol_size)
+function set_2d_coords(mol::Mol)::Int16
+    val::Cshort = ccall((:set_2d_coords, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}), mol.mol, mol.mol_size)
+    return val
 end
 
 """
@@ -34,9 +35,10 @@ Generate 2D coordinates aligned to a template mol.
 set_2d_coords_aligned(mol, template_mol)
 ```
 """
-function set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
+function set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Int16
     details_json::String = jsonify_details(details)
-    ccall((:set_2d_coords_aligned, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring, Csize_t, Cstring), mol.mol, mol.mol_size, template_mol.mol[], template_mol.mol_size[], details_json)
+    val::Cshort = ccall((:set_2d_coords_aligned, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring, Csize_t, Cstring, Ref{Ref{Cstring}}), mol.mol, mol.mol_size, template_mol.mol[], template_mol.mol_size[], details_json, C_NULL)
+    return val
 end
 
 """
@@ -48,7 +50,8 @@ Generate 3D coordinates.
 set_3d_coords(mol)
 ```
 """
-function set_3d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
+function set_3d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Int16
     details_json::String = jsonify_details(details)
-    ccall((:set_3d_coords, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring), mol.mol, mol.mol_size, details_json)
+    val::Cshort = ccall((:set_3d_coords, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring), mol.mol, mol.mol_size, details_json)
+    return val
 end

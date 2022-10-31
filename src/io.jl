@@ -9,6 +9,16 @@ mutable struct Mol
     end
 end
 
+mutable struct Reaction
+    rxn::Ref{Cstring}
+    rxn_size::Ref{Csize_t}
+    function Reaction(rxn::Cstring, rxn_size::Ref{Csize_t})
+        objref = Ref{Cstring}(rxn)
+        x = new(objref, rxn_size)
+        finalizer(x -> ccall((:free_ptr, librdkitcffi), Cvoid, (Cstring,), x.rxn[]), x)
+    end
+end
+
 """
     get_mol(mol_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Mol,Nothing}
 
@@ -49,6 +59,27 @@ function get_qmol(mol_string::AbstractString, details::Union{Dict{String,Any},No
         mol = Mol(val, mol_size)
     end
     return mol
+end
+
+"""
+    get_rxn(rxn_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Reaction,Nothing}
+
+Get a Reaction object from SMARTS. It can only be currently used for depiction purposes.
+
+```julia
+rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
+```
+"""
+function get_rxn(rxn_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Reaction,Nothing}
+    details_json::String = jsonify_details(details)
+    rxn_size = Ref{Csize_t}(0)
+    val = ccall((:get_rxn, librdkitcffi), Cstring, (Cstring, Ref{Csize_t}, Cstring), rxn_string, rxn_size, details_json)
+    if val == C_NULL
+        rxn = nothing
+    else
+        rxn = Reaction(val, rxn_size)
+    end
+    return rxn
 end
 
 """
