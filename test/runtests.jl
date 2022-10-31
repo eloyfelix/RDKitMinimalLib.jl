@@ -152,16 +152,19 @@ end
 
 @testset "coordinates" begin
     mol = get_mol(molblockv2000)
-    set_3d_coords(mol)
+    val = set_3d_coords(mol)
+    @test val == 1
     @test occursin("RDKit          3D", get_molblock(mol))
-    set_2d_coords(mol)
+    val = set_2d_coords(mol)
+    @test val == 1
     @test occursin("RDKit          2D", get_molblock(mol))
 
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     set_3d_coords(mol)
     template = get_mol("CC(=O)Nc1ccc(O)cc1")
     set_2d_coords(template)
-    set_2d_coords_aligned(mol, template)
+    val = set_2d_coords_aligned(mol, template)
+    @test val == 1
     @test occursin("RDKit          2D", get_molblock(mol))
 end
 
