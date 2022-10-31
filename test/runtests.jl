@@ -173,6 +173,10 @@ end
     val = set_2d_coords_aligned(mol, template)
     @test val == 1
     @test occursin("RDKit          2D", get_molblock(mol))
+
+    @test has_coords(mol) == 1
+    mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+    @test has_coords(mol) == 0
 end
 
 @testset "modification" begin
