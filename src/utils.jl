@@ -22,6 +22,7 @@ end
 
 Get RDKit version.
 
+# Examples
 ```julia
 version = version()
 ```
@@ -37,6 +38,7 @@ end
 
 Enable RDKit logging.
 
+# Examples
 ```julia
 enable_logging()
 ```
@@ -50,6 +52,7 @@ end
 
 Disable RDKit logging.
 
+# Examples
 ```julia
 disable_logging()
 ```

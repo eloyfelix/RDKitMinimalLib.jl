@@ -24,6 +24,7 @@ end
 
 Get a mol from a molblock (v2000, v3000), SMILES or SMARTS.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 ```
@@ -45,6 +46,7 @@ end
 
 Get a query mol (for substructure search) for a molblock (v2000, v3000), SMILES or SMARTS.
 
+# Examples
 ```julia
 mol = get_qmol("c1ccccc1")
 ```
@@ -66,6 +68,7 @@ end
 
 Get a Reaction object from SMARTS. It can only be currently used with `get_rxn_svg` function.
 
+# Examples
 ```julia
 rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
 ```
@@ -87,6 +90,7 @@ end
 
 Get the SMILES for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 smiles = get_smiles(mol)
@@ -104,6 +108,7 @@ end
 
 Get the SMARTS for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 smarts = get_smarts(mol)
@@ -121,6 +126,7 @@ end
 
 Get the CXSMILES for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 cxsmiles = get_cxsmiles(mol)
@@ -138,6 +144,7 @@ end
 
 Get the molblock (V2000) for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 molblock = get_molblock(mol)
@@ -155,6 +162,7 @@ end
 
 Get the molblock (V3000) for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 v3kmolblock = get_v3kmolblock(mol)
@@ -172,6 +180,7 @@ end
 
 Get the json (CommonChem format) for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 json = get_json(mol)
@@ -189,6 +198,7 @@ end
 
 Get the InChI for a mol object.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 inchi = get_inchi(mol)
@@ -206,6 +216,7 @@ end
 
 Get the InChI for a molblock.
 
+# Examples
 ```julia
 inchi = get_inchi_for_molblock(molblock)
 ```
@@ -222,6 +233,7 @@ end
 
 Get the InChIKey for a InChI.
 
+# Examples
 ```julia
 inchikey = get_inchikey_for_inchi("InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)")
 ```

@@ -25,5 +25,5 @@ makedocs(
 deploydocs(
     #options
     repo="github.com/eloyfelix/RDKitMinimalLib.jl.git",
-    devbranch = "main"
+    devbranch = "more_docs"
 )

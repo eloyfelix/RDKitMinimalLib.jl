@@ -4,6 +4,7 @@
 
 Set to use CoordgenLibs for 2D coordinates generation.
 
+# Examples
 ```julia
 prefer_coordgen(1)
 ```
@@ -17,6 +18,7 @@ end
 
 Generate 2D coordinates.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 set_2d_coords(mol)
@@ -32,6 +34,7 @@ end
 
 Generate 2D coordinates aligned to a template mol.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 template = get_mol("CC(=O)Nc1ccc(O)cc1")
@@ -50,6 +53,7 @@ end
 
 Generate 3D coordinates.
 
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 set_3d_coords(mol)
