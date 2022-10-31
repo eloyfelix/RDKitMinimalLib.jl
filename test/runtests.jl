@@ -68,8 +68,8 @@ end
     svg = get_svg(mol, smatches)
     @test occursin("width='350px'", get_rxn_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
 
-    mol = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
-    @test occursin("width='350px'", get_rxn_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
+    rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
+    @test occursin("width='350px'", get_rxn_svg(rxn, Dict{String,Any}("height" => 300, "width" => 350)))
 end
 
 @testset "calculators" begin
