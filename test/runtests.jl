@@ -37,10 +37,13 @@ M  END
 @testset "io" begin
     mol = get_mol(molblockv2000)
     @test mol.mol_size[] == 0x000000000000038e
+    @test isnothing(get_mol("CC(=O)Oc1cccc1C(=O)O"))
     qmol = get_qmol("c1ccccc1")
     @test qmol.mol_size[] == 0x000000000000023f
+    @test isnothing(get_qmol("CC(=O)Oc1cccc1C(=O)O"))
     rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
     @test rxn.rxn_size[] == 0x0000000000000269
+    @test isnothing(get_rxn("[CH3:1][OH:2]>>>[CH2:1]=[OH0:2]"))
     @test get_smiles(mol) == "CC(=O)Oc1ccccc1C(=O)O"
     @test get_smarts(qmol) == "c1ccccc1"
     @test get_cxsmiles(mol) == "CC(=O)Oc1ccccc1C(=O)O |(11.7423,-4.5949,;11.0273,-4.1837,;10.3136,-4.5972,;11.026,-3.3588,;10.311,-2.9474,;9.5946,-3.3607,;8.8798,-2.9479,;8.881,-2.1206,;9.5928,-1.7078,;10.3081,-2.117,;11.021,-1.7018,;11.7369,-2.1116,;11.0178,-0.8769,)|"
@@ -59,6 +62,12 @@ end
     qmol = get_qmol("c1ccccc1")
     smatch = get_substruct_match(mol, qmol)
     @test occursin("fill:#FF7F7F", get_svg(mol, smatch))
+
+    mol = get_mol("c1ccccc1")
+    qmol = get_qmol("c")
+    smatches = get_substruct_matches(mol, qmol)
+    svg = get_svg(mol, smatches)
+    @test occursin("width='350px'", get_rxn_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
 
     mol = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
     @test occursin("width='350px'", get_rxn_svg(mol, Dict{String,Any}("height" => 300, "width" => 350)))
@@ -186,4 +195,9 @@ end
     qmol = get_qmol("[CH3]~[CH2]~*")
     mol = get_mol("COc1cc(C=O)ccc1O")
     @test get_substruct_matches(mol, qmol) == Dict{String, Any}()
+end
+
+
+@testset "utils" begin
+    @test isempty(version()) == false
 end
