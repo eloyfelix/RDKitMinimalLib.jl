@@ -65,7 +65,7 @@ end
     mol = get_mol("c1ccccc1")
     qmol = get_qmol("c")
     smatches = get_substruct_matches(mol, qmol)
-    @test occursin("width='350px'", get_svg(mol, smatches))
+    @test occursin("width='350px'", get_svg(mol, smatches, Dict{String,Any}("height" => 300, "width" => 350)))
 
     rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
     @test occursin("width='350px'", get_rxn_svg(rxn, Dict{String,Any}("height" => 300, "width" => 350)))
