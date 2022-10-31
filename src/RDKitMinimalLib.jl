@@ -44,6 +44,7 @@ export # io
        set_2d_coords,
        set_2d_coords_aligned,
        set_3d_coords,
+       has_coords,
        # modification
        add_hs,
        remove_all_hs,
