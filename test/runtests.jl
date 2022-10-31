@@ -40,7 +40,6 @@ M  END
     @test isnothing(get_mol("CC(=O)Oc1cccc1C(=O)O"))
     qmol = get_qmol("c1ccccc1")
     @test qmol.mol_size[] == 0x000000000000023f
-    @test isnothing(get_qmol("CC(=O)Oc1cccc1C(=O)O"))
     rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
     @test rxn.rxn_size[] == 0x0000000000000269
     @test isnothing(get_rxn("[CH3:1][OH:2]>>>[CH2:1]=[OH0:2]"))
