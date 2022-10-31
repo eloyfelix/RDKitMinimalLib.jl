@@ -3,7 +3,7 @@
 
 Get a SVG depiction of the mol.
 
-#Examples
+# Examples
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 svg = get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350))
@@ -27,7 +27,7 @@ end
 
 Get a SVG depiction of the mol with multiple substructre matches.
 
-#Examples
+# Examples
 ```julia
 mol = get_mol("c1ccccc1")
 qmol = get_qmol("c")
@@ -48,7 +48,7 @@ end
 
 Get a SVG depiction of the reaction.
 
-#Examples
+# Examples
 ```julia
 svg = get_rxn_svg(rxn)
 rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
