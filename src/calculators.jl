@@ -4,7 +4,9 @@
 
 Get Morgan (ECFP like) fingerprints.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 mfp = get_morgan_fp(mol)
 ```
 
@@ -22,11 +24,13 @@ function get_morgan_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothin
 end
 
 """
-    get_morgan_fp_as_bytes(mol::Mol)
+    get_morgan_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
 
 Get Morgan (ECFP like) fingerprints as bytes.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 morgan_fp_bytes = get_morgan_fp_as_bytes(mol)
 ```
 """
@@ -43,7 +47,9 @@ end
 
 Get RDKit fingerprints.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 rfp = get_rdkit_fp(mol)
 ```
 """
@@ -55,11 +61,13 @@ function get_rdkit_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing
 end
 
 """
-    get_rdkit_fp_as_bytes(mol::Mol)
+    get_rdkit_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
 
 Get RDKit fingerprints as bytes.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 rfp_bytes = get_rdkit_fp_as_bytes(mol)
 ```
 """
@@ -76,7 +84,9 @@ end
 
 Get RDKit Pattern fingerprints.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 pfp = get_pattern_fp(mol)
 ```
 """
@@ -88,11 +98,13 @@ function get_pattern_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothi
 end
 
 """
-    get_pattern_fp_as_bytes(mol::Mol)
+    get_pattern_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
 
 Get RDKit Pattern fingerprints as bytes.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 pfp_bytes = get_pattern_fp_as_bytes(mol)
 ```
 """
@@ -109,7 +121,9 @@ end
 
 Get atom pair fingerprints.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 apfp = get_atom_pair_fp(mol)
 ```
 """
@@ -121,11 +135,13 @@ function get_atom_pair_fp(mol::Mol, details::Union{Dict{String,Any},Nothing}=not
 end
 
 """
-    get_atom_pair_fp_as_bytes(mol::Mol)
+    get_atom_pair_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
 
 Get atom pair fingerprints as bytes.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 apfp_bytes = get_atom_pair_fp_as_bytes(mol)
 ```
 """
@@ -142,7 +158,9 @@ end
 
 Get topological torsion fingerprints.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 ttfp = get_topological_torsion_fp(mol)
 ```
 """
@@ -154,11 +172,13 @@ function get_topological_torsion_fp(mol::Mol, details::Union{Dict{String,Any},No
 end
 
 """
-    get_topological_torsion_fp_as_bytes(mol::Mol)
+    get_topological_torsion_fp_as_bytes(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Vector{UInt8}
 
 Get topological torsion fingerprints as bytes.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 ttfp_bytes = get_topological_torsion_fp_as_bytes(mol)
 ```
 """
@@ -171,15 +191,17 @@ function get_topological_torsion_fp_as_bytes(mol::Mol, details::Union{Dict{Strin
 end
 
 """
-    get_descriptors(mol::Mol)
+    get_descriptors(mol::Mol)::Dict{String, Any}
 
 Get physico-chemical descriptors.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 descs = get_descriptors(mol)
 ```
 """
-function get_descriptors(mol::Mol)
+function get_descriptors(mol::Mol)::Dict{String, Any}
     val::Cstring = ccall((:get_descriptors, librdkitcffi), Cstring, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
     json = JSON.parse(unsafe_string_and_free(val))
     return json

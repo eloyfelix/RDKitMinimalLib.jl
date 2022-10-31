@@ -18,7 +18,7 @@ function unsafe_string_and_free(cstring::Cstring, length::Union{Ref{Csize_t}, No
 end
 
 """
-    version()
+    version()::String
 
 Get RDKit version.
 

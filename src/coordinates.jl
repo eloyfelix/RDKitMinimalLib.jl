@@ -13,11 +13,12 @@ function prefer_coordgen(val::Integer)
 end
 
 """
-    set_2d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
+    set_2d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Int16
 
 Generate 2D coordinates.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 set_2d_coords(mol)
 ```
 """
@@ -27,11 +28,14 @@ function set_2d_coords(mol::Mol)::Int16
 end
 
 """
-    set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
+    set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Int16
 
 Generate 2D coordinates aligned to a template mol.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+template = get_mol("CC(=O)Nc1ccc(O)cc1")
+set_2d_coords(template)
 set_2d_coords_aligned(mol, template_mol)
 ```
 """
@@ -42,11 +46,12 @@ function set_2d_coords_aligned(mol::Mol, template_mol::Mol, details::Union{Dict{
 end
 
 """
-    set_3d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)
+    set_3d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::Int16
 
 Generate 3D coordinates.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 set_3d_coords(mol)
 ```
 """

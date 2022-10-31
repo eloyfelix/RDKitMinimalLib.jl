@@ -64,7 +64,7 @@ end
 """
     get_rxn(rxn_string::AbstractString, details::Union{Dict{String,Any},Nothing}=nothing)::Union{Reaction,Nothing}
 
-Get a Reaction object from SMARTS. It can only be currently used for depiction purposes.
+Get a Reaction object from SMARTS. It can only be currently used with `get_rxn_svg` function.
 
 ```julia
 rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
@@ -88,6 +88,7 @@ end
 Get the SMILES for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 smiles = get_smiles(mol)
 ```
 """
@@ -104,6 +105,7 @@ end
 Get the SMARTS for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 smarts = get_smarts(mol)
 ```
 """
@@ -120,6 +122,7 @@ end
 Get the CXSMILES for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 cxsmiles = get_cxsmiles(mol)
 ```
 """
@@ -136,6 +139,7 @@ end
 Get the molblock (V2000) for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 molblock = get_molblock(mol)
 ```
 """
@@ -152,6 +156,7 @@ end
 Get the molblock (V3000) for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 v3kmolblock = get_v3kmolblock(mol)
 ```
 """
@@ -168,6 +173,7 @@ end
 Get the json (CommonChem format) for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 json = get_json(mol)
 ```
 """
@@ -184,6 +190,7 @@ end
 Get the InChI for a mol object.
 
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 inchi = get_inchi(mol)
 ```
 """
