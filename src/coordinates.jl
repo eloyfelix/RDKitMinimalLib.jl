@@ -64,3 +64,19 @@ function set_3d_coords(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothin
     val::Cshort = ccall((:set_3d_coords, librdkitcffi), Cshort, (Ref{Cstring}, Ref{Csize_t}, Cstring), mol.mol, mol.mol_size, details_json)
     return val
 end
+
+"""
+    has_coords(mol::Mol)::Int16
+
+Check if the molecule has coords.
+
+# Examples
+```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+has_coords(mol)
+```
+"""
+function has_coords(mol::Mol)::Int16
+    val::Cshort = ccall((:has_coords, librdkitcffi), Cshort, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
+    return val
+end
