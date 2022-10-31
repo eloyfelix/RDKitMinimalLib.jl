@@ -11,7 +11,9 @@ svg = get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350))
 
 ```julia
 mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
-svg = get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350))
+qmol = get_qmol("c1ccccc1")
+smatch = get_substruct_match(mol, qmol)
+svg = get_svg(mol, merge(smatch, Dict{String, Any}("height" => 350, "width" => 350)))
 ```
 
 """
