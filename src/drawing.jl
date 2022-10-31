@@ -3,9 +3,17 @@
 
 Get a SVG depiction of the mol.
 
+#Examples
 ```julia
-svg = get_svg(mol)
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+svg = get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350))
 ```
+
+```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+svg = get_svg(mol, Dict{String,Any}("height" => 300, "width" => 350))
+```
+
 """
 function get_svg(mol::Mol, details::Union{Dict{String,Any},Nothing}=nothing)::String
     details_json::String = jsonify_details(details)
@@ -19,8 +27,12 @@ end
 
 Get a SVG depiction of the mol with multiple substructre matches.
 
+#Examples
 ```julia
-svg = get_svg(mol, get_substruct_matches(mol, query))
+mol = get_mol("c1ccccc1")
+qmol = get_qmol("c")
+smatches = get_substruct_matches(mol, qmol)
+svg = get_svg(mol, smatches)
 ```
 """
 function get_svg(mol::Mol, smatches::Vector, details::Dict=Dict{String,Any}())::String
@@ -36,8 +48,11 @@ end
 
 Get a SVG depiction of the reaction.
 
+#Examples
 ```julia
 svg = get_rxn_svg(rxn)
+rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
+rxn_svg = get_rxn_svg(rxn, Dict{String,Any}("height" => 300, "width" => 500))
 ```
 """
 function get_rxn_svg(rxn::Reaction, details::Union{Dict{String,Any},Nothing}=nothing)::String

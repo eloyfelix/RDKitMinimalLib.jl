@@ -4,7 +4,9 @@
 
 Adds Hydrogens to the molecule.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 add_hs(mol)
 ```
 """
@@ -18,7 +20,9 @@ end
 
 Removes all Hydrogens from the molecule.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 remove_all_hs(mol)
 ```
 """

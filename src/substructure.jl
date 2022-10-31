@@ -4,6 +4,7 @@
 
 Gets a substructure match.
 
+# Examples
 ```julia
 pattern = get_qmol("ccO")
 mol = get_mol("c1ccccc1O")
@@ -22,6 +23,7 @@ end
 
 Gets all substructure matches.
 
+# Examples
 ```julia
 pattern = get_qmol("ccO")
 mol = get_mol("c1ccccc1O")

@@ -4,7 +4,9 @@
 
 Standardizes a molecule.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 cleanup(mol)
 ```
 """
@@ -18,7 +20,9 @@ end
 
 Applies a series of standard transformations to correct functional groups and recombine charges.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 normalize(mol)
 ```
 """
@@ -32,7 +36,9 @@ end
 
 Returns the canonical tautomer for a molecule.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 canonical_tautomer(mol)
 ```
 """
@@ -46,7 +52,9 @@ end
 
 Returns the uncharged version of the largest fragment.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 charge_parent(mol)
 ```
 """
@@ -60,7 +68,9 @@ end
 
 Ensures the strongest acid groups are charged first.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 reionize(mol)
 ```
 """
@@ -74,7 +84,9 @@ end
 
 Uncharges molecules by adding and/or removing hydrogens.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 neutralize(mol)
 ```
 """
@@ -88,7 +100,9 @@ end
 
 Returns the largest fragment after doing a cleanup.
 
+# Examples
 ```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
 fragment_parent(mol)
 ```
 """

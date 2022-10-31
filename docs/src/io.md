@@ -6,6 +6,7 @@ CurrentModule = RDKitMinimalLib
 ```@docs
 get_mol
 get_qmol
+get_rxn
 get_smiles
 get_smarts
 get_molblock
