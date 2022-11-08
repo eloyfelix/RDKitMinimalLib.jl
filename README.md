@@ -1,6 +1,7 @@
 [![CI Testing](https://github.com/eloyfelix/RDKitMinimalLib.jl/workflows/CI/badge.svg)](https://github.com/eloyfelix/RDKitMinimalLib.jl/actions?query=workflow%3ACI+branch%3Amain)
 [![codecov.io](http://codecov.io/github/eloyfelix/RDKitMinimalLib.jl/coverage.svg?branch=main)](http://codecov.io/github/eloyfelix/RDKitMinimalLib.jl?branch=main)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/eloyfelix/RDKitMinimalLib.jl/blob/main/LICENSE)
+[![RDKitMinimalLib Downloads](https://shields.io/endpoint?url=https://pkgs.genieframework.com/api/v1/badge/RDKitMinimalLib)](https://pkgs.genieframework.com?packages=RDKitMinimalLib)
 [![Binder](http://mybinder.org/badge.svg)](http://beta.mybinder.org/v2/gh/eloyfelix/RDKitMinimalLib.jl/notebooks?filepath=notebooks/demo.ipynb)
 
 # RDKitMinimalLib.jl
