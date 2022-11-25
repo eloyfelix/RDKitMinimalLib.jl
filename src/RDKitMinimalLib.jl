@@ -30,6 +30,8 @@ export # io
        get_atom_pair_fp_as_bytes,
        get_topological_torsion_fp,
        get_topological_torsion_fp_as_bytes,
+       get_maccs_fp,
+       get_maccs_fp_as_bytes,
        get_descriptors,
        # standardization
        cleanup,
