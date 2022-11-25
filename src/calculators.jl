@@ -191,6 +191,41 @@ function get_topological_torsion_fp_as_bytes(mol::Mol, details::Union{Dict{Strin
 end
 
 """
+    get_maccs_fp(mol::Mol)::String
+
+Get MACCS keys fingerprints.
+
+# Examples
+```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+ttfp = get_maccs_fp(mol)
+```
+"""
+function get_maccs_fp(mol::Mol)::String
+    val::Cstring = ccall((:get_maccs_fp, librdkitcffi), Cstring, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
+    mafp = unsafe_string_and_free(val)
+    return mafp
+end
+
+"""
+    get_maccs_as_bytes(mol::Mol)::Vector{UInt8}
+
+Get MACCS keys fingerprints as bytes.
+
+# Examples
+```julia
+mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+ttfp_bytes = get_maccs_fp_as_bytes(mol)
+```
+"""
+function get_maccs_fp_as_bytes(mol::Mol)::Vector{UInt8}
+    n_bytes = Ref{Csize_t}(0)
+    val::Cstring = ccall((:get_maccs_fp_as_bytes, librdkitcffi), Cstring, (Cstring, Csize_t, Ref{Csize_t}), mol.mol[], mol.mol_size[], n_bytes)
+    mafp = unsafe_string_and_free(val, n_bytes)
+    return Vector{UInt8}(mafp)
+end
+
+"""
     get_descriptors(mol::Mol)::Dict{String, Any}
 
 Get physico-chemical descriptors.
