@@ -203,6 +203,6 @@ descs = get_descriptors(mol)
 """
 function get_descriptors(mol::Mol)::Dict{String, Any}
     val::Cstring = ccall((:get_descriptors, librdkitcffi), Cstring, (Cstring, Csize_t), mol.mol[], mol.mol_size[])
-    json = JSON.parse(unsafe_string_and_free(val))
+    json = JSON.parse(unsafe_string_and_free(val), dicttype = Dict{String, Any})
     return json
 end
