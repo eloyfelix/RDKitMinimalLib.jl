@@ -9,7 +9,7 @@ RDKit_jll = "03d1d220-30e6-562a-9e1a-3062d7b56d75"
 
 [compat]
 julia = "^1.6"
-JSON = "0.21.1"
+JSON = "0.21.1, 1"
 RDKit_jll = "2022.9.1"
 
 [extras]
