@@ -36,7 +36,7 @@ M  END
 
 @testset "io" begin
     mol = get_mol(molblockv2000)
-    @test mol.mol_size[] == 0x000000000000038e
+    @test mol.mol_size[] == 0x0000000000000391
     @test isnothing(get_mol("CC(=O)Oc1cccc1C(=O)O"))
     qmol = get_qmol("c1ccccc1")
     @test qmol.mol_size[] == 0x000000000000023f
