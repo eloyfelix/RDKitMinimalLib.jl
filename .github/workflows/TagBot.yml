@@ -10,7 +10,7 @@ on:
         required: false
         default: "3"
   schedule:
-    - cron: 0 0 * * *
+    - cron: "0 0 * * *"
 permissions:
   actions: read
   checks: read
