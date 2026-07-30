@@ -68,7 +68,7 @@ end
 """
     has_coords(mol::Mol)::Int16
 
-Check if the molecule has coords.
+Return the dimensionality of the molecule's conformer: 0 if none, 2 for 2D, 3 for 3D.
 
 # Examples
 ```julia

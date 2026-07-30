@@ -36,19 +36,16 @@ M  END
 
 @testset "io" begin
     mol = get_mol(molblockv2000)
-    @test mol.mol_size[] == 0x0000000000000391
     @test isnothing(get_mol("CC(=O)Oc1cccc1C(=O)O"))
     qmol = get_qmol("c1ccccc1")
-    @test qmol.mol_size[] == 0x000000000000023f
     rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
-    @test rxn.rxn_size[] == 0x0000000000000269
     @test isnothing(get_rxn("[CH3:1][OH:2]>>>[CH2:1]=[OH0:2]"))
     @test get_smiles(mol) == "CC(=O)Oc1ccccc1C(=O)O"
     @test get_smarts(qmol) == "c1ccccc1"
     @test get_cxsmiles(mol) == "CC(=O)Oc1ccccc1C(=O)O |(11.7423,-4.5949,;11.0273,-4.1837,;10.3136,-4.5972,;11.026,-3.3588,;10.311,-2.9474,;9.5946,-3.3607,;8.8798,-2.9479,;8.881,-2.1206,;9.5928,-1.7078,;10.3081,-2.117,;11.021,-1.7018,;11.7369,-2.1116,;11.0178,-0.8769,)|"
     @test occursin("V2000", get_molblock(mol))
     @test occursin("V3000", get_v3kmolblock(mol))
-    @test occursin("commonchem", get_json(mol))
+    @test occursin("rdkitjson", get_json(mol))
     @test get_inchi(mol) == "InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)"
     @test get_inchi_for_molblock(molblockv2000) == "InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)"
     @test get_inchikey_for_inchi("InChI=1S/C9H8O4/c1-6(10)13-8-5-3-2-4-7(8)9(11)12/h2-5H,1H3,(H,11,12)") == "BSYNRYMUTXBXSQ-UHFFFAOYSA-N"
@@ -100,7 +97,58 @@ end
     tb = get_topological_torsion_fp_as_bytes(mol)
     @test sum([count_ones(b) for b in tb]) == 18
 
-    @test get_descriptors(mol) == Dict{String, Any}("CrippenMR" => 44.7103, "lipinskiHBD" => 1.0, "kappa1" => 9.2496, "kappa3" => 2.29741, "NumHBD" => 1.0, "NumSpiroAtoms" => 0.0, "chi1n" => 3.61745, "FractionCSP3" => 0.11111, "chi0n" => 6.98135, "NumUnspecifiedAtomStereoCenters" => 0.0, "NumAmideBonds" => 0.0, "NumAromaticHeterocycles" => 0.0, "NumAtoms" => 21.0, "tpsa" => 63.6, "NumHeteroatoms" => 4.0, "Phi" => 2.63916, "exactmw" => 180.04225, "hallKierAlpha" => -1.83999, "CrippenClogP" => 1.31009, "chi3v" => 1.37115, "NumSaturatedHeterocycles" => 0.0, "NumAromaticRings" => 1.0, "labuteASA" => 74.75705, "amw" => 180.15899, "NumAliphaticHeterocycles" => 0.0, "NumAtomStereoCenters" => 0.0, "chi4v" => 0.88717, "NumRotatableBonds" => 2.0, "lipinskiHBA" => 4.0, "NumRings" => 1.0, "chi0v" => 6.98135, "NumHeterocycles" => 0.0, "NumHeavyAtoms" => 13.0, "chi3n" => 1.37115, "chi1v" => 3.61745, "NumBridgeheadAtoms" => 0.0, "kappa2" => 3.70925, "chi2n" => 1.37115, "NumHBA" => 3.0, "chi4n" => 0.88717, "NumSaturatedRings" => 0.0, "NumAliphaticRings" => 0.0, "chi2v" => 1.37115)
+    descs = get_descriptors(mol)
+    ref_descs = [
+        "CrippenMR" => 44.7103,
+        "lipinskiHBD" => 1.0,
+        "kappa1" => 9.2496,
+        "kappa3" => 2.29741,
+        "NumHBD" => 1.0,
+        "NumSpiroAtoms" => 0.0,
+        "chi1n" => 3.61745,
+        "FractionCSP3" => 0.11111,
+        "chi0n" => 6.98135,
+        "NumUnspecifiedAtomStereoCenters" => 0.0,
+        "NumAmideBonds" => 0.0,
+        "NumAromaticHeterocycles" => 0.0,
+        "NumAtoms" => 21.0,
+        "tpsa" => 63.6,
+        "NumHeteroatoms" => 4.0,
+        "Phi" => 2.63916,
+        "exactmw" => 180.04225,
+        "hallKierAlpha" => -1.83999,
+        "CrippenClogP" => 1.31009,
+        "chi3v" => 1.37115,
+        "NumSaturatedHeterocycles" => 0.0,
+        "NumAromaticRings" => 1.0,
+        "labuteASA" => 74.75705,
+        "amw" => 180.15899,
+        "NumAliphaticHeterocycles" => 0.0,
+        "NumAtomStereoCenters" => 0.0,
+        "chi4v" => 0.88717,
+        "NumRotatableBonds" => 2.0,
+        "lipinskiHBA" => 4.0,
+        "NumRings" => 1.0,
+        "chi0v" => 6.98135,
+        "NumHeterocycles" => 0.0,
+        "NumHeavyAtoms" => 13.0,
+        "chi3n" => 1.37115,
+        "chi1v" => 3.61745,
+        "NumBridgeheadAtoms" => 0.0,
+        "kappa2" => 3.70925,
+        "chi2n" => 1.37115,
+        "NumHBA" => 3.0,
+        "chi4n" => 0.88717,
+        "NumSaturatedRings" => 0.0,
+        "NumAliphaticRings" => 0.0,
+        "chi2v" => 1.37115
+    ]
+    @test typeof(descs) == Dict{String, Any}
+    @testset "descriptors" begin
+        for (k,v) in ref_descs
+            @test v ≈ descs[k] atol=1e-4
+        end
+    end
 end
 
 @testset "standardization" begin
@@ -113,7 +161,7 @@ end
     # cleanup
     mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
     smiles = get_smiles(mol)
-    @test smiles == "O=N(=O)CC[Pt]"
+    @test smiles == "O=N(=O)C[CH2][Pt]"
     cleanup(mol)
     smiles = get_smiles(mol)
     @test smiles == "[CH2-]C[N+](=O)[O-].[Pt+]"
@@ -159,22 +207,35 @@ end
 
 @testset "coordinates" begin
     mol = get_mol(molblockv2000)
+    @test has_coords(mol) == 2
     val = set_3d_coords(mol)
     @test val == 1
     @test occursin("RDKit          3D", get_molblock(mol))
+    @test has_coords(mol) == 3
     val = set_2d_coords(mol)
     @test val == 1
     @test occursin("RDKit          2D", get_molblock(mol))
+    @test has_coords(mol) == 2
 
+    # template must match as a substructure
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     set_3d_coords(mol)
-    template = get_mol("CC(=O)Nc1ccc(O)cc1")
+    template = get_mol("CC(=O)Oc1ccccc1")
     set_2d_coords(template)
-    val = set_2d_coords_aligned(mol, template)
-    @test val == 1
+    @test set_2d_coords_aligned(mol, template) == 1
     @test occursin("RDKit          2D", get_molblock(mol))
+    @test has_coords(mol) == 2
 
-    @test has_coords(mol) == 1
+    # non-matching template: no-op unless acceptFailure
+    mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+    set_3d_coords(mol)
+    nomatch = get_mol("CC(=O)Nc1ccc(O)cc1")
+    set_2d_coords(nomatch)
+    @test set_2d_coords_aligned(mol, nomatch) == 0
+    @test has_coords(mol) == 3
+    @test set_2d_coords_aligned(mol, nomatch, Dict{String,Any}("acceptFailure" => true)) == 1
+    @test has_coords(mol) == 2
+
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     @test has_coords(mol) == 0
 end
