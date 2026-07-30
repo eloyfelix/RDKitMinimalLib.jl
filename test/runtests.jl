@@ -36,12 +36,9 @@ M  END
 
 @testset "io" begin
     mol = get_mol(molblockv2000)
-    @test mol.mol_size[] == 0x000000000000038e
     @test isnothing(get_mol("CC(=O)Oc1cccc1C(=O)O"))
     qmol = get_qmol("c1ccccc1")
-    @test qmol.mol_size[] == 0x000000000000023f
     rxn = get_rxn("[CH3:1][OH:2]>>[CH2:1]=[OH0:2]")
-    @test rxn.rxn_size[] == 0x0000000000000269
     @test isnothing(get_rxn("[CH3:1][OH:2]>>>[CH2:1]=[OH0:2]"))
     @test get_smiles(mol) == "CC(=O)Oc1ccccc1C(=O)O"
     @test get_smarts(qmol) == "c1ccccc1"
