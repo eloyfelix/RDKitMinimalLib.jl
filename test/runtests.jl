@@ -161,7 +161,7 @@ end
     # cleanup
     mol = get_mol("[Pt]CCN(=O)=O", Dict{String,Any}("sanitize" => false))
     smiles = get_smiles(mol)
-    @test smiles == "O=N(=O)CC[Pt]"
+    @test smiles == "O=N(=O)C[CH2][Pt]"
     cleanup(mol)
     smiles = get_smiles(mol)
     @test smiles == "[CH2-]C[N+](=O)[O-].[Pt+]"
