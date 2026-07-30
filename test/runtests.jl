@@ -207,22 +207,35 @@ end
 
 @testset "coordinates" begin
     mol = get_mol(molblockv2000)
+    @test has_coords(mol) == 2
     val = set_3d_coords(mol)
     @test val == 1
     @test occursin("RDKit          3D", get_molblock(mol))
+    @test has_coords(mol) == 3
     val = set_2d_coords(mol)
     @test val == 1
     @test occursin("RDKit          2D", get_molblock(mol))
+    @test has_coords(mol) == 2
 
+    # template must match as a substructure
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     set_3d_coords(mol)
-    template = get_mol("CC(=O)Nc1ccc(O)cc1")
+    template = get_mol("CC(=O)Oc1ccccc1")
     set_2d_coords(template)
-    val = set_2d_coords_aligned(mol, template)
-    @test val == 1
+    @test set_2d_coords_aligned(mol, template) == 1
     @test occursin("RDKit          2D", get_molblock(mol))
+    @test has_coords(mol) == 2
 
-    @test has_coords(mol) == 1
+    # non-matching template: no-op unless acceptFailure
+    mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
+    set_3d_coords(mol)
+    nomatch = get_mol("CC(=O)Nc1ccc(O)cc1")
+    set_2d_coords(nomatch)
+    @test set_2d_coords_aligned(mol, nomatch) == 0
+    @test has_coords(mol) == 3
+    @test set_2d_coords_aligned(mol, nomatch, Dict{String,Any}("acceptFailure" => true)) == 1
+    @test has_coords(mol) == 2
+
     mol = get_mol("CC(=O)Oc1ccccc1C(=O)O")
     @test has_coords(mol) == 0
 end
