@@ -1,7 +1,7 @@
 
 mutable struct Mol
-    mol::Ref{Cstring}
-    mol_size::Ref{Csize_t}
+    mol::Base.RefValue{Cstring}
+    mol_size::Base.RefValue{Csize_t}
     function Mol(mol::Cstring, mol_size::Ref{Csize_t})
         objref = Ref{Cstring}(mol)
         x = new(objref, mol_size)
@@ -10,8 +10,8 @@ mutable struct Mol
 end
 
 mutable struct Reaction
-    rxn::Ref{Cstring}
-    rxn_size::Ref{Csize_t}
+    rxn::Base.RefValue{Cstring}
+    rxn_size::Base.RefValue{Csize_t}
     function Reaction(rxn::Cstring, rxn_size::Ref{Csize_t})
         objref = Ref{Cstring}(rxn)
         x = new(objref, rxn_size)
